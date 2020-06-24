@@ -29,6 +29,9 @@ namespace Soccer.Web.Data.Entities
         [Display(Name = "Cerrado")]
         public bool IsClosed { get; set; }
 
+        [Display(Name = "Activo")]
+        public bool Active { get; set; }
+
         public GroupEntity Group { get; set; }
     }
 }

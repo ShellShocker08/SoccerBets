@@ -17,6 +17,9 @@ namespace Soccer.Web.Data.Entities
 
         public ICollection<MatchEntity> Matches { get; set; }
 
+        [Display(Name = "Activo")]
+        public bool Active { get; set; }
+
     }
 
 }

@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Soccer.Web.Data;
+using Soccer.Web.Helpers;
+using Soccer.Web.Interfaces;
 
 namespace Soccer.Web
 {
@@ -29,7 +31,10 @@ namespace Soccer.Web
 
             // MariaDB – DataContext
             services.AddDbContext<DataContext>(options =>
-            options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Helpers
+            services.AddScoped<IImageHelper, ImageHelper>();
 
         }
 
