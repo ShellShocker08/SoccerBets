@@ -35,6 +35,7 @@ namespace Soccer.Web
 
             // Helpers
             services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
 
         }
 

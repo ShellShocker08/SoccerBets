@@ -1,47 +1,53 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Soccer.Web.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Soccer.Web.Helpers
 {
     public class ImageHelper : IImageHelper
     {
-        public async Task<string> UploadImageAsync(IFormFile imageFile, string folder = null)
-        {            
+        public async Task<string> UploadImageAsync(IFormFile imageFile, string folder)
+        {
             // Obtener Fecha Actual YY/MM/DD
             string year = DateTime.Today.Year.ToString();
             string month = DateTime.Today.Month.ToString();
             string day = DateTime.Today.Day.ToString();
 
-            // Crear PATH del Folder            
+            // Crear PATH del Folder y el PATH para guardar en la DB           
             string pathFolder = $"{year}\\{month}\\{day}";
 
             // Checar que se haya mandado folder adicional para el PATH
-            if (folder != null) pathFolder += $"\\{folder}";
-
-            try
+            if (folder != null)
             {
-                // Checar que el PATH exista, si no crearlo
-                if (!Directory.Exists(pathFolder))
-                    Directory.CreateDirectory(pathFolder);
-            }
-            catch (Exception ex)
-            {
-                return $"Error - Directory Not Found: {ex.InnerException.Message}";
+                pathFolder += $"\\{folder}";
             }
 
             // Crear Guid
             string guid = Guid.NewGuid().ToString();
             string file = $"{guid}.jpg";
 
-            // Combinar pathFolder con Guid
+            // Crear path
             string path = Path.Combine(
                 Directory.GetCurrentDirectory(),
-                $"wwwroot\\img\\{pathFolder}",
+                $"wwwroot\\img\\{pathFolder}");
+
+            try
+            {
+                // Checar que el PATH exista, si no crearlo
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error - Directory Not Found: {ex.InnerException.Message}";
+            }
+
+            // Combinar path con archivo
+            path = Path.Combine($"{path}",
                 file);
 
             try
@@ -58,6 +64,30 @@ namespace Soccer.Web.Helpers
             }
 
             return $"~/img/{pathFolder}/{file}";
+        }
+
+        public async Task<string> UpdateImageAsync(string pathOldFile, IFormFile imageFile, string folder)
+        {
+            // Remover del pathOldFile el PATH relativo [ ~/ ]
+            pathOldFile = pathOldFile.Remove(0, 2);
+
+            // Recuperar PATH del Archivo Anterior
+            string path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                $"wwwroot\\{pathOldFile}");
+            
+            try
+            {
+                // Borrar Archivo Anterior
+                File.Delete(path);
+
+                // Subir Nueva Imagen
+                return await UploadImageAsync(imageFile, folder);
+            }
+            catch (Exception ex)
+            {
+                return $"Error - File Not Updated: {ex.InnerException.Message}";
+            }
         }
     }
 }

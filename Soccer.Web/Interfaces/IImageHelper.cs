@@ -9,5 +9,6 @@ namespace Soccer.Web.Interfaces
     public interface IImageHelper
     {       
         Task<string> UploadImageAsync(IFormFile imageFile, string folder);
+        Task<string> UpdateImageAsync(string pathOldFile, IFormFile imageFile, string folder);
     }
 }
