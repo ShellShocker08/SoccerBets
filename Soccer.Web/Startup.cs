@@ -37,6 +37,10 @@ namespace Soccer.Web
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
 
+            // Seeder
+            services.AddTransient<SeedDB>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

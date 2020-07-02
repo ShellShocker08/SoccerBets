@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Soccer.Web.Interfaces;
 using System;
 using System.IO;
@@ -8,6 +9,13 @@ namespace Soccer.Web.Helpers
 {
     public class ImageHelper : IImageHelper
     {
+        private readonly IConfiguration _config;
+
+        public ImageHelper(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public async Task<string> UploadImageAsync(IFormFile imageFile, string folder)
         {
             // Obtener Fecha Actual YY/MM/DD
@@ -15,8 +23,8 @@ namespace Soccer.Web.Helpers
             string month = DateTime.Today.Month.ToString();
             string day = DateTime.Today.Day.ToString();
 
-            // Crear PATH del Folder y el PATH para guardar en la DB           
-            string pathFolder = $"{year}\\{month}\\{day}";
+            // Crear PATH del Folder         
+            string pathFolder = $"{year}\\{month}\\{day}";            
 
             // Checar que se haya mandado folder adicional para el PATH
             if (folder != null)
@@ -28,10 +36,13 @@ namespace Soccer.Web.Helpers
             string guid = Guid.NewGuid().ToString();
             string file = $"{guid}.jpg";
 
+            string serverFolder = _config.GetValue<string>(
+                "Static:ImageFolder");
+
             // Crear path
             string path = Path.Combine(
                 Directory.GetCurrentDirectory(),
-                $"wwwroot\\img\\{pathFolder}");
+                $"{serverFolder}\\{pathFolder}");
 
             try
             {

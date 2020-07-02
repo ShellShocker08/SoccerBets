@@ -16,7 +16,8 @@ namespace Soccer.Web.Helpers
             {
                 Id = isNew ? 0 : model.Id,
                 LogoPath = path,
-                Name = model.Name
+                Name = model.Name,
+                Active = model.Active
             };
         }
 
@@ -26,7 +27,8 @@ namespace Soccer.Web.Helpers
             {
                 Id = teamEntity.Id,
                 LogoPath = teamEntity.LogoPath,
-                Name = teamEntity.Name
+                Name = teamEntity.Name,
+                Active = teamEntity.Active
             };
         }
     }
