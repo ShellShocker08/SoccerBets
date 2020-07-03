@@ -15,15 +15,18 @@ namespace Soccer.Web.Controllers
         private readonly DataContext _context;
         private readonly IImageHelper _imageHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly IComboHelper _combosHelper;
 
         public TournamentsController(
             DataContext context,
             IImageHelper imageHelper,
-            IConverterHelper converterHelper)
+            IConverterHelper converterHelper,
+            IComboHelper combosHelper)
         {
             _context = context;
             _imageHelper = imageHelper;
             _converterHelper = converterHelper;
+            _combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -260,6 +263,46 @@ namespace Soccer.Web.Controllers
 
             return View(groupEntity);
         }
+
+        public async Task<IActionResult> AddGroupDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            GroupEntity groupEntity = await _context.Groups.FindAsync(id);
+            if (groupEntity == null)
+            {
+                return NotFound();
+            }
+
+            GroupDetailViewModel model = new GroupDetailViewModel
+            {
+                Group = groupEntity,
+                GroupId = groupEntity.Id,
+                Teams = _combosHelper.GetComboTeams()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddGroupDetail(GroupDetailViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                GroupDetailEntity groupDetailEntity = await _converterHelper.ToGroupDetailEntityAsync(model, true);
+                _context.Add(groupDetailEntity);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("DetailsGroup", new { id = model.GroupId });                
+            }
+
+            model.Teams = _combosHelper.GetComboTeams();
+            return View(model);
+        }
+
 
     }
 }

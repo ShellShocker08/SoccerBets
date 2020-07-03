@@ -15,6 +15,9 @@ namespace Soccer.Web.Interfaces
         TournamentViewModel ToTournamentViewModel(TournamentEntity tournamentEntity);
         Task<GroupEntity> ToGroupEntityAsync(GroupViewModel model, bool isNew);
         GroupViewModel ToGroupViewModel(GroupEntity groupEntity);
+        Task<GroupDetailEntity> ToGroupDetailEntityAsync(GroupDetailViewModel model, bool isNew);
+        GroupDetailViewModel ToGroupDetailViewModel(GroupDetailEntity groupDetailEntity);
+
 
 
     }

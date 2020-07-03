@@ -36,6 +36,7 @@ namespace Soccer.Web
             // Helpers
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IComboHelper, CombosHelper>();
 
             // Seeder
             services.AddTransient<SeedDB>();
