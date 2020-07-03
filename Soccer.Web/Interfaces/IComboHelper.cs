@@ -9,5 +9,7 @@ namespace Soccer.Web.Interfaces
     public interface IComboHelper
     {
         IEnumerable<SelectListItem> GetComboTeams();
+        IEnumerable<SelectListItem> GetComboTeams(int groupId);
+
     }
 }

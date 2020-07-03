@@ -296,10 +296,56 @@ namespace Soccer.Web.Controllers
                 GroupDetailEntity groupDetailEntity = await _converterHelper.ToGroupDetailEntityAsync(model, true);
                 _context.Add(groupDetailEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("DetailsGroup", new { id = model.GroupId });                
+                return RedirectToAction("DetailsGroup", new { id = model.GroupId });
             }
 
+            model.Group = await _context.Groups.FindAsync(model.GroupId);
             model.Teams = _combosHelper.GetComboTeams();
+            return View(model);
+        }
+
+        public async Task<IActionResult> AddMatch(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            GroupEntity groupEntity = await _context.Groups.FindAsync(id);
+            if (groupEntity == null)
+            {
+                return NotFound();
+            }
+
+            MatchViewModel model = new MatchViewModel
+            {
+                Group = groupEntity,
+                GroupId = groupEntity.Id,
+                Teams = _combosHelper.GetComboTeams(groupEntity.Id)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddMatch(MatchViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.LocalId != model.VisitorId)
+                {
+                    MatchEntity matchEntity = await _converterHelper.ToMatchEntityAsync(model, true);
+                    _context.Add(matchEntity);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("DetailsGroup", new { id = model.GroupId });
+                }
+
+                ModelState.AddModelError(string.Empty, "The local and visitor must be differents teams.");
+            }
+
+            model.Group = await _context.Groups.FindAsync(model.GroupId);
+            model.Teams = _combosHelper.GetComboTeams(model.GroupId);
             return View(model);
         }
 

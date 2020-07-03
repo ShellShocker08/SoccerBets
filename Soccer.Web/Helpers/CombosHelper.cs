@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Soccer.Web.Data;
 using Soccer.Web.Interfaces;
 using System;
@@ -19,7 +20,8 @@ namespace Soccer.Web.Helpers
 
         public IEnumerable<SelectListItem> GetComboTeams()
         {
-            List<SelectListItem> list = _context.Teams.Select(t => new SelectListItem
+            List<SelectListItem> list = _context.Teams
+                .Select(t => new SelectListItem
             {
                 Text = t.Name,
                 Value = $"{t.Id}"
@@ -34,7 +36,29 @@ namespace Soccer.Web.Helpers
             });
 
             return list;
-
         }
+
+        public IEnumerable<SelectListItem> GetComboTeams(int groupId)        
+        {
+            List<SelectListItem> list = _context.GroupDetails
+                .Include(gd => gd.Team)
+                .Where(gd => gd.Group.Id == groupId)
+                .Select(gd => new SelectListItem
+                {
+                    Text = gd.Team.Name,
+                    Value = $"{gd.Team.Id}"
+                })
+                .OrderBy(t => t.Text)
+                .ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Select a team...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
     }
 }
