@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Soccer.Common.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Soccer.Common.Enums;
 using Soccer.Web.Data.Entities;
+using Soccer.Web.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +13,104 @@ namespace Soccer.Web.Data
     {
         private readonly DataContext _context;
         private readonly IConfiguration _config;
+        private readonly IUserHelper _userHelper;
 
         public SeedDB(
             DataContext context,
-            IConfiguration config)
+            IConfiguration config,
+            IUserHelper userHelper)
         {
             _context = context;
             _config = config;
+            _userHelper = userHelper;
         }
 
         public async Task SeedAsync()
         {
             // Checar que la BD esté creada
-            await _context.Database.EnsureCreatedAsync();
-
+            await _context.Database.EnsureCreatedAsync();            
+        
             await CheckTeamsAsync();
             await CheckTournamentsAsync();
-        }        
+
+            // Seeder - Usuarios
+            await CheckRolesAsync();
+            await CheckUserAsync("1010", "Marco A.", "Luna", "mlunac08@outlook.com", "350 634 2747", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckUserAsync("2020", "Albertano", "Santacruz", "mlunac08@gmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+            await CheckUserAsync("3030", "Rodrigo", "Montalvo", "mlunac08@hotmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+            // await CheckPreditionsAsync();
+
+        }
+
+        private async Task CheckPreditionsAsync()
+        {
+            if (!_context.Predictions.Any())
+            {
+                foreach (var user in _context.Users)
+                {
+                    if (user.UserType == UserType.User)
+                    {
+                        AddPrediction(user);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private void AddPrediction(UserEntity user)
+        {
+            var random = new Random();
+            foreach (var match in _context.Matches)
+            {
+                _context.Predictions.Add(new PredictionEntity
+                {
+                    GoalsLocal = random.Next(0, 5),
+                    GoalsVisitor = random.Next(0, 5),
+                    Match = match,
+                    User = user
+                });
+            }
+        }
+
+        private async Task<UserEntity> CheckUserAsync(
+            string document,
+            string firstName,
+            string lastName,
+            string email, 
+            string phone,
+            string address,
+            UserType userType)
+        {
+            UserEntity user = await _userHelper.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                user = new UserEntity
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
+                    Address = address,
+                    Document = document,
+                    Team = _context.Teams.FirstOrDefault(),
+                    UserType = userType
+                };
+
+                await _userHelper.AddUserAsync(user, "Luna123");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+            }
+
+            return user;
+        }
+
+
+        private async Task CheckRolesAsync()
+        {
+            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+            await _userHelper.CheckRoleAsync(UserType.User.ToString());
+        }
 
         private async Task CheckTeamsAsync()
         {
@@ -80,8 +163,8 @@ namespace Soccer.Web.Data
         {
             if (!_context.Tournaments.Any())
             {
-                var startDate = DateTime.Today.AddMonths(2).ToUniversalTime();
-                var endDate = DateTime.Today.AddMonths(3).ToUniversalTime();
+                DateTime startDate = DateTime.Today.AddMonths(2).ToUniversalTime();
+                DateTime endDate = DateTime.Today.AddMonths(3).ToUniversalTime();
 
                 string resourcesFolder = _config.GetValue<string>(
                "Static:SeederImageFolder");

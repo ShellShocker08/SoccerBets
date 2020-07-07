@@ -20,4 +20,8 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Soccer.Common\Soccer.Common.csproj" />
+  </ItemGroup>
+
 </Project>

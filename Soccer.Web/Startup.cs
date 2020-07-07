@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Soccer.Web.Data;
+using Soccer.Web.Data.Entities;
 using Soccer.Web.Helpers;
 using Soccer.Web.Interfaces;
 
@@ -29,6 +31,17 @@ namespace Soccer.Web
         {
             services.AddControllersWithViews();
 
+            // User/Password - Características
+            services.AddIdentity<UserEntity, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = false;
+                cfg.Password.RequiredUniqueChars = 0;
+                cfg.Password.RequireLowercase = false;
+                cfg.Password.RequireNonAlphanumeric = false;
+                cfg.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<DataContext>();
+
             // MariaDB – DataContext
             services.AddDbContext<DataContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
@@ -37,6 +50,7 @@ namespace Soccer.Web
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IComboHelper, CombosHelper>();
+            services.AddScoped<IUserHelper, UserHelper>();
 
             // Seeder
             services.AddTransient<SeedDB>();
@@ -63,6 +77,10 @@ namespace Soccer.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // User Identity
+            app.UseAuthentication();
+
 
             app.UseEndpoints(endpoints =>
             {
