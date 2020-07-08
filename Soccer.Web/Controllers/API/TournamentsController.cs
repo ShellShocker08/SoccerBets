@@ -40,6 +40,5 @@ namespace Soccer.Web.Controllers.API
 
             return Ok(_converterHelper.ToTournamentResponse(tournaments));
         }
-
     }
 }
