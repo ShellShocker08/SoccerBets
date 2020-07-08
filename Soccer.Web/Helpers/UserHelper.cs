@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Soccer.Web.Data.Entities;
 using Soccer.Web.Interfaces;
+using Soccer.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,16 @@ namespace Soccer.Web.Helpers
     {
         public readonly UserManager<UserEntity> _userManager;
         public readonly RoleManager<IdentityRole> _roleManager;
+        public readonly SignInManager<UserEntity> _signInManager;
+
         public UserHelper(
             UserManager<UserEntity> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<UserEntity> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IdentityResult> AddUserAsync(UserEntity user, string password)
@@ -52,5 +57,20 @@ namespace Soccer.Web.Helpers
         {
             return await _userManager.IsInRoleAsync(user, roleName);
         }
+
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            return await _signInManager.PasswordSignInAsync(
+                model.Username,
+                model.Password,
+                model.RememberMe,
+                false);
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
     }
 }
