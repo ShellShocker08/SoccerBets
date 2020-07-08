@@ -1,7 +1,6 @@
 using Prism;
 using Prism.Ioc;
 using Soccer.Prism.ViewModels;
-using Soccer.Prism.Views;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
@@ -32,8 +31,7 @@ namespace Soccer.Prism
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<NavigationPage>();           
         }
     }
 }
