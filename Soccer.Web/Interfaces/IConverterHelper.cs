@@ -1,4 +1,5 @@
-﻿using Soccer.Web.Data.Entities;
+﻿using Soccer.Common.Responses;
+using Soccer.Web.Data.Entities;
 using Soccer.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Soccer.Web.Interfaces
 {
     public interface IConverterHelper
     {
+        // Entities
         TeamEntity ToTeamEntity(TeamViewModel model, string path, bool isNew);
         TeamViewModel ToTeamViewModel(TeamEntity teamEntity);
         TournamentEntity ToTournamentEntity(TournamentViewModel model, string path, bool isNew);
@@ -20,6 +22,9 @@ namespace Soccer.Web.Interfaces
         Task<MatchEntity> ToMatchEntityAsync(MatchViewModel model, bool isNew);
         MatchViewModel ToMatchViewModel(MatchEntity matchEntity);
 
+        // Responses
+        TournamentResponse ToTournamentResponse(TournamentEntity tournamentEntity);
+        List<TournamentResponse> ToTournamentResponse(List<TournamentEntity> tournamentEntities);
 
 
 
