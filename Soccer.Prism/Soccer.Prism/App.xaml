@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              x:Class="Soccer.Prism.App">
-  <Application.Resources>
+    <Application.Resources>
+        <ResourceDictionary>
 
-    <!-- Application resource dictionary -->
+            <!-- API -->
+            <x:String x:Key="UrlAPI">https://example-soccerbets.azurewebsites.net/</x:String>
 
-  </Application.Resources>
+        </ResourceDictionary>
+    </Application.Resources>
 </prism:PrismApplication>
