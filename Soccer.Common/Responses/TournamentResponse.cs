@@ -22,7 +22,7 @@ namespace Soccer.Common.Responses
 
         public string LogoPath { get; set; }
 
-        public ICollection<GroupResponse> Groups { get; set; }
+        public List<GroupResponse> Groups { get; set; }
 
     }
 }
