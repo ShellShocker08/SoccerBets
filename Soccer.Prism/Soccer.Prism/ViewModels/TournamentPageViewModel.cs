@@ -1,21 +1,50 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
+﻿using Prism.Navigation;
+using Soccer.Common.Interfaces;
 using Soccer.Common.Responses;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Soccer.Prism.ViewModels
 {
     public class TournamentPageViewModel : ViewModelBase
     {
-        public TournamentPageViewModel(INavigationService navigation)
+        private readonly IApiService _apiService;
+        private List<TournamentResponse> _tournaments;
+
+        public TournamentPageViewModel(
+            INavigationService navigation,
+            IApiService apiService)
             : base(navigation)
         {
             Title = "Soccer";
+            _apiService = apiService;
+            LoadTournamentsAsync();
         }
 
-        public List<TournamentResponse> Tournaments { get; set; }
+        public List<TournamentResponse> Tournaments
+        {
+            get => _tournaments;
+            set => SetProperty(ref _tournaments, value);
+        }
+
+        private async void LoadTournamentsAsync()
+        {
+            string url = App.Current.Resources["UrlAPI"].ToString();
+            Response response = await _apiService.GetListAsync<TournamentResponse>
+                (url,
+                "/api",
+                "/Tournaments");
+
+            if (!response.IsSuccess)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Error",
+                    response.Message,
+                    "Accept");
+                return;
+            }
+
+            Tournaments = (List<TournamentResponse>)response.Result;
+        }
+
     }
 }
