@@ -33,6 +33,7 @@ namespace Soccer.Prism
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<TournamentPage, TournamentPageViewModel>();
+            containerRegistry.RegisterForNavigation<GroupsPage, GroupsPageViewModel>();
         }
     }
 }
