@@ -64,7 +64,7 @@
                                        BackgroundColor="{StaticResource ColorBackground}"
                                        HorizontalOptions="Center"
                                        TextColor="{StaticResource ColorPrimary}"
-                                       IsVisible="{Binding IsRunning}"
+                                       IsBusy="{Binding IsBusy}"
                                        Title="Cargando..."
                                        VerticalOptions="Center"
                                        ViewBoxWidth="60"

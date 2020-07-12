@@ -9,6 +9,7 @@ namespace Soccer.Common.Interfaces
     public interface IApiService
     {
         Task<Response> GetListAsync<T>(string urlBase, string servicePrefix, string controller);
+        Task<bool> CheckConnectionAsync(string url);
     }
 
 }
