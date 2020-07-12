@@ -1,8 +1,10 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Com.Syncfusion.Sfbusyindicator;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.Droid;
 
 namespace Soccer.Prism.Droid
 {
@@ -21,6 +23,9 @@ namespace Soccer.Prism.Droid
 
             // FFImage
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+
+            //Syncfusion
+            new SfBusyIndicatorRenderer();
 
             LoadApplication(new App(new AndroidInitializer()));
         }

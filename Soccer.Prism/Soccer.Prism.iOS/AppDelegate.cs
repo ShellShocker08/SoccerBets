@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
 using UIKit;
 
 
@@ -19,6 +20,9 @@ namespace Soccer.Prism.iOS
 
             // FFImage
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+
+            //Syncfusion
+            new SfBusyIndicatorRenderer();
 
             LoadApplication(new App(new iOSInitializer()));
 
