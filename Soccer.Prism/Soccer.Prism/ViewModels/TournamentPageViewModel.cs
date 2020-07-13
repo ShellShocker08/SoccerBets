@@ -1,6 +1,7 @@
 ﻿using Prism.Navigation;
 using Soccer.Common.Interfaces;
 using Soccer.Common.Responses;
+using Soccer.Prism.Helpers;
 using Soccer.Prism.ItemViewModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Soccer.Prism.ViewModels
             if (!connection)
             {
                 IsBusy = false;
-                await App.Current.MainPage.DisplayAlert("Error", "Check the internet connection.", "Accept");
+                await App.Current.MainPage.DisplayAlert(Languages.Error, Languages.ConnectionError, Languages.Accept);
                 return;
             }
             else
@@ -58,9 +59,9 @@ namespace Soccer.Prism.ViewModels
                 if (!response.IsSuccess)
                 {
                     await App.Current.MainPage.DisplayAlert(
-                        "Error",
+                        Languages.Error,
                         response.Message,
-                        "Accept");
+                        Languages.Accept);
                     return;
                 }
 

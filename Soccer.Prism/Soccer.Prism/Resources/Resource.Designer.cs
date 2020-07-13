@@ -86,5 +86,122 @@ namespace Soccer.Prism.Resources {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GD.
+        /// </summary>
+        public static string GD {
+            get {
+                return ResourceManager.GetString("GD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ML.
+        /// </summary>
+        public static string ML {
+            get {
+                return ResourceManager.GetString("ML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify User.
+        /// </summary>
+        public static string ModifyUser {
+            get {
+                return ResourceManager.GetString("ModifyUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MP.
+        /// </summary>
+        public static string MP {
+            get {
+                return ResourceManager.GetString("MP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MT.
+        /// </summary>
+        public static string MT {
+            get {
+                return ResourceManager.GetString("MT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MW.
+        /// </summary>
+        public static string MW {
+            get {
+                return ResourceManager.GetString("MW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Positions.
+        /// </summary>
+        public static string MyPositions {
+            get {
+                return ResourceManager.GetString("MyPositions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Predictions.
+        /// </summary>
+        public static string MyPredictions {
+            get {
+                return ResourceManager.GetString("MyPredictions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PO.
+        /// </summary>
+        public static string PO {
+            get {
+                return ResourceManager.GetString("PO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournaments.
+        /// </summary>
+        public static string Tournaments {
+            get {
+                return ResourceManager.GetString("Tournaments", resourceCulture);
+            }
+        }
     }
 }

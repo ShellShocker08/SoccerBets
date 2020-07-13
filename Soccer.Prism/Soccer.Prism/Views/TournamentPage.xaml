@@ -6,6 +6,7 @@
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Soccer.Prism.Views.TournamentPage"
+             xmlns:i18n="clr-namespace:Soccer.Prism.Helpers"
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 
@@ -65,7 +66,7 @@
                                        HorizontalOptions="Center"
                                        TextColor="{StaticResource ColorPrimary}"
                                        IsBusy="{Binding IsBusy}"
-                                       Title="Cargando..."
+                                       Title="{i18n:Translate Loading}"
                                        VerticalOptions="Center"
                                        ViewBoxWidth="60"
                                        ViewBoxHeight="60" />

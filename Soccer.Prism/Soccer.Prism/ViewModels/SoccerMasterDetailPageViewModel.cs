@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using Soccer.Common.Models;
+using Soccer.Prism.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,31 +31,31 @@ namespace Soccer.Prism.ViewModels
                 {
                     Icon = "tournament",
                     PageName = "TournamentPage",
-                    Title = "Tournaments"
+                    Title = Languages.Tournaments
                 },
                 new Menu
                 {
                     Icon = "prediction",
                     PageName = "MyPredictionPage",
-                    Title = "My Predictions"
+                    Title = Languages.MyPredictions
                 },
                 new Menu
                 {
                     Icon = "medal",
                     PageName = "MyPositionsPage",
-                    Title = "My Positions"
+                    Title = Languages.MyPositions
                 },
                 new Menu
                 {
                     Icon = "user",
                     PageName = "ModifyUserPage",
-                    Title = "Modify User"
+                    Title = Languages.ModifyUser
                 },
                 new Menu
                 {
                     Icon = "login",
                     PageName = "LoginPage",
-                    Title = "Login"
+                    Title = Languages.Login
                 }
             };
 
