@@ -5,6 +5,8 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Soccer.Prism.Views.ClosedMatchesPage"
              IconImageSource="ic_tag_faces"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 

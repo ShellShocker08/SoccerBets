@@ -6,6 +6,8 @@
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Soccer.Prism.Views.TournamentPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
              xmlns:i18n="clr-namespace:Soccer.Prism.Helpers"
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
