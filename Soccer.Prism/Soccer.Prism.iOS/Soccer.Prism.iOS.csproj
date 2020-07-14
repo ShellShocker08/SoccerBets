@@ -228,5 +228,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_grade.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cdd_splash.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
