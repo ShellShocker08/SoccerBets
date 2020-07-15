@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Soccer.Common.Enums;
+using Soccer.Web.Data;
 using Soccer.Web.Data.Entities;
 using Soccer.Web.Interfaces;
 using Soccer.Web.Models;
@@ -12,16 +13,20 @@ namespace Soccer.Web.Controllers
     {
         private readonly IUserHelper _userHelper;
         private readonly IComboHelper _combosHelper;
+        private readonly DataContext _context;
         private readonly IImageHelper _imageHelper;
+
 
         public AccountController(
             IUserHelper userHelper,
             IImageHelper imageHelper,
-            IComboHelper comboHelper)
+            IComboHelper comboHelper,
+            DataContext context)
         {
             _userHelper = userHelper;
             _imageHelper = imageHelper;
             _combosHelper = comboHelper;
+            _context = context;
         }
 
 
@@ -113,6 +118,55 @@ namespace Soccer.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> ChangeUser()
+        {
+            UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);            
+
+            EditUserViewModel model = new EditUserViewModel
+            {
+                Address = user.Address,
+                Document = user.Document,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                PicturePath = user.PicturePath,
+                Teams = _combosHelper.GetComboTeams(),
+                TeamId = user.Team.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = model.PicturePath;
+
+                if (model.PictureFile != null)
+                {
+                    path = await _imageHelper.UpdateImageAsync(path, model.PictureFile, null);
+                }
+
+                UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.Document = model.Document;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.PicturePath = path;
+                user.Team = await _context.Teams.FindAsync(model.TeamId);
+
+                await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            model.Teams = _combosHelper.GetComboTeams();
+            return View(model);
+        }
 
         public IActionResult NotAuthorized()
         {
