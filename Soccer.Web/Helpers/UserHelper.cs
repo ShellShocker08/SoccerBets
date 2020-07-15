@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Soccer.Common.Enums;
+using Soccer.Web.Data;
 using Soccer.Web.Data.Entities;
 using Soccer.Web.Interfaces;
 using Soccer.Web.Models;
@@ -14,15 +16,18 @@ namespace Soccer.Web.Helpers
         public readonly UserManager<UserEntity> _userManager;
         public readonly RoleManager<IdentityRole> _roleManager;
         public readonly SignInManager<UserEntity> _signInManager;
+        public readonly DataContext _context;
 
         public UserHelper(
             UserManager<UserEntity> userManager,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<UserEntity> signInManager)
+            SignInManager<UserEntity> signInManager,
+            DataContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public async Task<IdentityResult> AddUserAsync(UserEntity user, string password)
@@ -71,6 +76,34 @@ namespace Soccer.Web.Helpers
         {
             await _signInManager.SignOutAsync();
         }
+
+        public async Task<UserEntity> AddUserAsync(AddUserViewModel model, string path, UserType userType)
+        {
+            UserEntity userEntity = new UserEntity
+            {
+                Address = model.Address,
+                Document = model.Document,
+                Email = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PicturePath = path,
+                PhoneNumber = model.PhoneNumber,
+                Team = await _context.Teams.FindAsync(model.TeamId),
+                UserName = model.Username,
+                UserType = userType
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(userEntity, model.Password);
+            if (result != IdentityResult.Success)
+            {
+                return null;
+            }
+
+            UserEntity newUser = await GetUserByEmailAsync(model.Username);
+            await AddUserToRoleAsync(newUser, userEntity.UserType.ToString());
+            return newUser;
+        }
+
 
     }
 }

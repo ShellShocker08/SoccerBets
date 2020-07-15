@@ -43,12 +43,12 @@ namespace Soccer.Web
             }).AddEntityFrameworkStores<DataContext>();
 
             // MariaDB – DataContext
-            //services.AddDbContext<DataContext>(options =>
-            //    options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("MariaDBConnection")));
 
             // SQLServer - DataContext
-            services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
+            //services.AddDbContext<DataContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
 
             // Redirección a páginas sin privilegios
             services.ConfigureApplicationCookie(options =>

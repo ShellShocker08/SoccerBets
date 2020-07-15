@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Soccer.Common.Enums;
+using Soccer.Web.Data.Entities;
 using Soccer.Web.Interfaces;
 using Soccer.Web.Models;
 using System.Linq;
@@ -9,11 +11,19 @@ namespace Soccer.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
+        private readonly IComboHelper _combosHelper;
+        private readonly IImageHelper _imageHelper;
 
-        public AccountController(IUserHelper userHelper)
+        public AccountController(
+            IUserHelper userHelper,
+            IImageHelper imageHelper,
+            IComboHelper comboHelper)
         {
             _userHelper = userHelper;
+            _imageHelper = imageHelper;
+            _combosHelper = comboHelper;
         }
+
 
         public IActionResult Login()
         {
@@ -30,7 +40,7 @@ namespace Soccer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userHelper.LoginAsync(model);
+                Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
                 if (result.Succeeded)
                 {
                     if (Request.Query.Keys.Contains("ReturnUrl"))
@@ -52,6 +62,57 @@ namespace Soccer.Web.Controllers
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Register()
+        {
+            AddUserViewModel model = new AddUserViewModel
+            {
+                Teams = _combosHelper.GetComboTeams()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = string.Empty;
+
+                if (model.PictureFile != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.PictureFile, null);
+                }
+
+                UserEntity user = await _userHelper.AddUserAsync(model, path, UserType.User);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Este correo ya ha sido registrado");
+                    model.Teams = _combosHelper.GetComboTeams();
+                    return View(model);
+                }
+
+                LoginViewModel loginViewModel = new LoginViewModel
+                {
+                    Password = model.Password,
+                    RememberMe = false,
+                    Username = model.Username
+                };
+
+                Microsoft.AspNetCore.Identity.SignInResult result2 = await _userHelper.LoginAsync(loginViewModel);
+
+                if (result2.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            model.Teams = _combosHelper.GetComboTeams();
+            return View(model);
+        }
+
 
         public IActionResult NotAuthorized()
         {
