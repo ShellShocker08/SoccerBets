@@ -117,94 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="ConnectionError" xml:space="preserve">
-    <value>Checar Conexión a Internet</value>
-  </data>
-  <data name="Accept" xml:space="preserve">
-    <value>Aceptar</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="MP" xml:space="preserve">
-    <value>MP</value>
-  </data>
-  <data name="MW" xml:space="preserve">
-    <value>MW</value>
-  </data>
-  <data name="MT" xml:space="preserve">
-    <value>MT</value>
-  </data>
-  <data name="ML" xml:space="preserve">
-    <value>ML</value>
-  </data>
-  <data name="PO" xml:space="preserve">
-    <value>PC</value>
-  </data>
-  <data name="GD" xml:space="preserve">
-    <value>GD</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Cargando</value>
-  </data>
-  <data name="Tournaments" xml:space="preserve">
-    <value>Torneos</value>
-  </data>
-  <data name="MyPredictions" xml:space="preserve">
-    <value>Mis Predicciones</value>
-  </data>
-  <data name="MyPositions" xml:space="preserve">
-    <value>Mis Posiciones</value>
-  </data>
-  <data name="ModifyUser" xml:space="preserve">
-    <value>Modificar usuario</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Iniciar sesión</value>
-  </data>
   <data name="UserAlreadyExists" xml:space="preserve">
-    <value>El usuario ya existe.</value>
+    <value>User already exists.</value>
   </data>
   <data name="ConfirmEmail" xml:space="preserve">
-    <value>Confirmar correo electrónico</value>
+    <value>Confirm Email</value>
   </data>
   <data name="ConfirmEmailSubject" xml:space="preserve">
-    <value>Para habliitar al usuario, haga clic en este enlace:</value>
+    <value>To allow the user, please click on this link:</value>
   </data>
   <data name="ConfirmEmailMessage" xml:space="preserve">
-    <value>Se envió un correo electrónico de confirmación. ¡Confirme su cuenta e inicie sesión en la aplicación!</value>
+    <value>A Confirmation email was sent. Please confirm your account and log into the App.</value>
   </data>
   <data name="UserDoesntExists" xml:space="preserve">
-    <value>El usuario no existe</value>
+    <value>User doesn't exists.</value>
   </data>
   <data name="RecoverPassword" xml:space="preserve">
-    <value>Recuperar contraseña</value>
+    <value> Recover Password</value>
   </data>
   <data name="RecoverPasswordSubject" xml:space="preserve">
-    <value>Para restablecer la contraseña, haga clic en este enlace:</value>
+    <value>To reset the password click in this link:</value>
   </data>
   <data name="RecoverPasswordMessage" xml:space="preserve">
-    <value>Se envió un email con instrucciones sobre cómo cambiar la contraseña.</value>
+    <value>An email with instructions to change the password was sent.</value>
   </data>
   <data name="IncorrectCurrentPassword" xml:space="preserve">
-    <value>Contraseña actual incorrecta.</value>
+    <value>Incorrect current password.</value>
   </data>
   <data name="PasswordChangedSuccess" xml:space="preserve">
-    <value>Su contraseña ha sido modificada con éxito.</value>
+    <value>The password was changed successfully!</value>
   </data>
   <data name="MatchDoesntExists" xml:space="preserve">
-    <value>El partido no existe.</value>
+    <value>Match doesn't exists.</value>
   </data>
   <data name="MatchAlreadyClosed" xml:space="preserve">
-    <value>El partido ya está cerrado.</value>
+    <value>Match is already closed.</value>
   </data>
   <data name="MatchAlreadyStarts" xml:space="preserve">
-    <value>No puedes grabar la predicción porque la partida ya ha comenzado.</value>
+    <value>You cannot record the prediction, because the match has already started.</value>
   </data>
   <data name="TournamentDoesntExists" xml:space="preserve">
-    <value>El torneo no existe.</value>
+    <value>Tournament doesn't exists.</value>
   </data>
 </root>

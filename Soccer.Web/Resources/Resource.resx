@@ -117,54 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="ConnectionError" xml:space="preserve">
-    <value>Checar Conexión a Internet</value>
-  </data>
-  <data name="Accept" xml:space="preserve">
-    <value>Aceptar</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="MP" xml:space="preserve">
-    <value>MP</value>
-  </data>
-  <data name="MW" xml:space="preserve">
-    <value>MW</value>
-  </data>
-  <data name="MT" xml:space="preserve">
-    <value>MT</value>
-  </data>
-  <data name="ML" xml:space="preserve">
-    <value>ML</value>
-  </data>
-  <data name="PO" xml:space="preserve">
-    <value>PC</value>
-  </data>
-  <data name="GD" xml:space="preserve">
-    <value>GD</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Cargando</value>
-  </data>
-  <data name="Tournaments" xml:space="preserve">
-    <value>Torneos</value>
-  </data>
-  <data name="MyPredictions" xml:space="preserve">
-    <value>Mis Predicciones</value>
-  </data>
-  <data name="MyPositions" xml:space="preserve">
-    <value>Mis Posiciones</value>
-  </data>
-  <data name="ModifyUser" xml:space="preserve">
-    <value>Modificar usuario</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Iniciar sesión</value>
-  </data>
   <data name="UserAlreadyExists" xml:space="preserve">
     <value>El usuario ya existe.</value>
   </data>

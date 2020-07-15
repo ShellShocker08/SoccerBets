@@ -70,6 +70,33 @@ namespace Soccer.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm Email.
+        /// </summary>
+        public static string ConfirmEmail {
+            get {
+                return ResourceManager.GetString("ConfirmEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Confirmation email was sent. Please confirm your account and log into the App..
+        /// </summary>
+        public static string ConfirmEmailMessage {
+            get {
+                return ResourceManager.GetString("ConfirmEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To allow the user, please click on this link:.
+        /// </summary>
+        public static string ConfirmEmailSubject {
+            get {
+                return ResourceManager.GetString("ConfirmEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check the Internet connection..
         /// </summary>
         public static string ConnectionError {
@@ -97,6 +124,15 @@ namespace Soccer.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect current password..
+        /// </summary>
+        public static string IncorrectCurrentPassword {
+            get {
+                return ResourceManager.GetString("IncorrectCurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
@@ -111,6 +147,33 @@ namespace Soccer.Prism.Resources {
         public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match is already closed..
+        /// </summary>
+        public static string MatchAlreadyClosed {
+            get {
+                return ResourceManager.GetString("MatchAlreadyClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot record the prediction, because the match has already started..
+        /// </summary>
+        public static string MatchAlreadyStarts {
+            get {
+                return ResourceManager.GetString("MatchAlreadyStarts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match doesn&apos;t exists..
+        /// </summary>
+        public static string MatchDoesntExists {
+            get {
+                return ResourceManager.GetString("MatchDoesntExists", resourceCulture);
             }
         }
         
@@ -187,6 +250,15 @@ namespace Soccer.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password was changed successfully!.
+        /// </summary>
+        public static string PasswordChangedSuccess {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PO.
         /// </summary>
         public static string PO {
@@ -196,11 +268,65 @@ namespace Soccer.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Recover Password.
+        /// </summary>
+        public static string RecoverPassword {
+            get {
+                return ResourceManager.GetString("RecoverPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An email with instructions to change the password was sent..
+        /// </summary>
+        public static string RecoverPasswordMessage {
+            get {
+                return ResourceManager.GetString("RecoverPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To reset the password click in this link:.
+        /// </summary>
+        public static string RecoverPasswordSubject {
+            get {
+                return ResourceManager.GetString("RecoverPasswordSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tournament doesn&apos;t exists..
+        /// </summary>
+        public static string TournamentDoesntExists {
+            get {
+                return ResourceManager.GetString("TournamentDoesntExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tournaments.
         /// </summary>
         public static string Tournaments {
             get {
                 return ResourceManager.GetString("Tournaments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already exists..
+        /// </summary>
+        public static string UserAlreadyExists {
+            get {
+                return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User doesn&apos;t exists..
+        /// </summary>
+        public static string UserDoesntExists {
+            get {
+                return ResourceManager.GetString("UserDoesntExists", resourceCulture);
             }
         }
     }
