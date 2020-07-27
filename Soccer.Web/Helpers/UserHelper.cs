@@ -6,8 +6,6 @@ using Soccer.Web.Data.Entities;
 using Soccer.Web.Interfaces;
 using Soccer.Web.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Soccer.Web.Helpers
@@ -43,7 +41,7 @@ namespace Soccer.Web.Helpers
 
         public async Task CheckRoleAsync(string roleName)
         {
-            var roleExists = await _roleManager.RoleExistsAsync(roleName);
+            bool roleExists = await _roleManager.RoleExistsAsync(roleName);
             if (!roleExists)
             {
                 await _roleManager.CreateAsync(new IdentityRole
@@ -67,7 +65,6 @@ namespace Soccer.Web.Helpers
                 .Include(u => u.Team)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
-
 
         public async Task<bool> IsUserInRoleAsync(UserEntity user, string roleName)
         {
@@ -125,6 +122,9 @@ namespace Soccer.Web.Helpers
             return await _userManager.UpdateAsync(user);
         }
 
-
+        public async Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        }
     }
 }
