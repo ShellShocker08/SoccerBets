@@ -31,14 +31,23 @@ namespace Soccer.Web
             // User/Password - Características
             services.AddIdentity<UserEntity, IdentityRole>(cfg =>
             {
+                // Email Confirmation
+                //cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                //cfg.SignIn.RequireConfirmedEmail = true;
+
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
                 cfg.Password.RequiredUniqueChars = 0;
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<DataContext>();
+            })
+                .AddEntityFrameworkStores<DataContext>()
+                // Email Confirmation
+                //.AddDefaultTokenProviders();
 
+
+            // Token Authorization
             services.AddAuthentication()
                 .AddCookie()
                 .AddJwtBearer(cfg =>
@@ -73,6 +82,7 @@ namespace Soccer.Web
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IComboHelper, CombosHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IMailHelper, MailHelper>();
 
             // Seeder
             services.AddTransient<SeedDB>();

@@ -98,6 +98,10 @@ namespace Soccer.Web.Data
                     UserType = userType
                 };
 
+                //// Email Confirmation
+                //var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                //await _userHelper.ConfirmEmailAsync(user, token);
+
                 await _userHelper.AddUserAsync(user, "Luna123");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
             }

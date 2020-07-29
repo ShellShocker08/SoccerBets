@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Soccer.Common.Enums;
@@ -22,6 +23,7 @@ namespace Soccer.Web.Controllers
         private readonly DataContext _context;
         private readonly IImageHelper _imageHelper;
         private readonly IConfiguration _configuration;
+        private readonly IMailHelper _mailHelper;
 
 
         public AccountController(
@@ -29,13 +31,15 @@ namespace Soccer.Web.Controllers
             IImageHelper imageHelper,
             IComboHelper comboHelper,
             DataContext context,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IMailHelper mailHelper)
         {
             _userHelper = userHelper;
             _imageHelper = imageHelper;
             _combosHelper = comboHelper;
             _context = context;
             _configuration = configuration;
+            _mailHelper = mailHelper;
         }
 
 
@@ -108,6 +112,8 @@ namespace Soccer.Web.Controllers
                     return View(model);
                 }
 
+
+                // Register & Login
                 LoginViewModel loginViewModel = new LoginViewModel
                 {
                     Password = model.Password,
@@ -121,12 +127,31 @@ namespace Soccer.Web.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+
+                // Register & Send Confirmation Email
+                //var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                //var tokenLink = Url.Action("ConfirmEmail", "Account", new
+                //{
+                //    userid = user.Id,
+                //    token = myToken
+                //}, protocol: HttpContext.Request.Scheme);
+
+                //var response = _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                //    $"To allow the user, " +
+                //    $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                //if (response.IsSuccess)
+                //{
+                //    ViewBag.Message = "The instructions to allow your user has been sent to email.";
+                //    return View(model);
+                //}
+
+                //ModelState.AddModelError(string.Empty, response.Message);
             }
 
             model.Teams = _combosHelper.GetComboTeams();
             return View(model);
         }
-
+    
         public async Task<IActionResult> ChangeUser()
         {
             UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);            
@@ -249,6 +274,27 @@ namespace Soccer.Web.Controllers
             return BadRequest();
         }
 
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
+
+            UserEntity user = await _userHelper.GetUserAsync(new Guid(userId));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            IdentityResult result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
 
         public IActionResult NotAuthorized()
         {
