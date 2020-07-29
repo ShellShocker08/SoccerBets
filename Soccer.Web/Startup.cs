@@ -42,7 +42,7 @@ namespace Soccer.Web
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequireUppercase = false;
             })
-                .AddEntityFrameworkStores<DataContext>()
+                .AddEntityFrameworkStores<DataContext>();
                 // Email Confirmation
                 //.AddDefaultTokenProviders();
 

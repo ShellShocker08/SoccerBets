@@ -23,6 +23,7 @@ namespace Soccer.Web.Interfaces
         Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password);
         Task<string> GenerateEmailConfirmationTokenAsync(UserEntity user);
         Task<IdentityResult> ConfirmEmailAsync(UserEntity user, string token);
-
+        Task<string> GeneratePasswordResetTokenAsync(UserEntity user);
+        Task<IdentityResult> ResetPasswordAsync(UserEntity user, string token, string password);
     }
 }
