@@ -15,6 +15,12 @@ namespace Soccer.Web.Data.Entities
         [Display(Name = "Logo")]
         public string LogoPath { get; set; }
 
+        [Display(Name = "Logo")]
+        public string LogoFullPath => string.IsNullOrEmpty(LogoPath)
+           ? "https://example-soccerbets.azurewebsites.net//images/noimage.png"
+           : $"https://SoccerWeb4.azurewebsites.net{LogoPath.Substring(1)}";
+
+
         [Display(Name = "Activo")]
         public bool Active { get; set; }
 

@@ -83,6 +83,7 @@ namespace Soccer.Web
             services.AddScoped<IComboHelper, CombosHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
+            services.AddScoped<IMatchHelper, MatchHelper>();
 
             // Seeder
             services.AddTransient<SeedDB>();
