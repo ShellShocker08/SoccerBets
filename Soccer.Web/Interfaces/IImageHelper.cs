@@ -10,5 +10,6 @@ namespace Soccer.Web.Interfaces
     {       
         Task<string> UploadImageAsync(IFormFile imageFile, string folder);
         Task<string> UpdateImageAsync(string pathOldFile, IFormFile imageFile, string folder);
+        string UploadImage(byte[] pictureArray, string folder);
     }
 }
