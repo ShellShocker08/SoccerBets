@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 using Soccer.Common.Enums;
-using Soccer.Common.Models;
-using Soccer.Web.Data;
-using Soccer.Web.Data.Entities;
-using Soccer.Web.Helpers;
-using Soccer.Web.Interfaces;
 using Soccer.Common.Request;
 using Soccer.Common.Responses;
-using System.Globalization;
+using Soccer.Web.Data;
+using Soccer.Web.Data.Entities;
+using Soccer.Web.Interfaces;
 using Soccer.Web.Resources;
+using System.Globalization;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Soccer.Web.Controllers.API
 {
@@ -107,5 +108,87 @@ namespace Soccer.Web.Controllers.API
                 Message = Resource.ConfirmEmailMessage
             });
         }
+
+        [HttpPost]
+        [Route("RecoverPassword")]
+        public async Task<IActionResult> RecoverPassword([FromBody] EmailRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Bad request"
+                });
+            }
+
+            CultureInfo cultureInfo = new CultureInfo(request.CultureInfo);
+            Resource.Culture = cultureInfo;
+
+            UserEntity user = await _userHelper.GetUserAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = Resource.UserDoesntExists
+                });
+            }
+
+            string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+            string link = Url.Action("ResetPassword", "Account", new { token = myToken }, protocol: HttpContext.Request.Scheme);
+            _mailHelper.SendMail(request.Email, Resource.RecoverPassword, $"<h1>{Resource.RecoverPassword}</h1>" +
+                $"{Resource.RecoverPasswordSubject}:</br></br>" +
+                $"<a href = \"{link}\">{Resource.RecoverPassword}</a>");
+
+            return Ok(new Response
+            {
+                IsSuccess = true,
+                Message = Resource.RecoverPasswordMessage
+            });
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut]
+        public async Task<IActionResult> PutUser([FromBody] UserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            CultureInfo cultureInfo = new CultureInfo(request.CultureInfo);
+            Resource.Culture = cultureInfo;
+
+            UserEntity userEntity = await _userHelper.GetUserAsync(request.Email);
+            if (userEntity == null)
+            {
+                return BadRequest(Resource.UserDoesntExists);
+            }
+
+            string picturePath = userEntity.PicturePath;
+            if (request.PictureArray != null && request.PictureArray.Length > 0)
+            {
+                picturePath = _imageHelper.UploadImage(request.PictureArray, "Users");
+            }
+
+            userEntity.FirstName = request.FirstName;
+            userEntity.LastName = request.LastName;
+            userEntity.Address = request.Address;
+            userEntity.PhoneNumber = request.Phone;
+            userEntity.Document = request.Phone;
+            userEntity.Team = await _dataContext.Teams.FindAsync(request.TeamId);
+            userEntity.PicturePath = picturePath;
+
+            IdentityResult respose = await _userHelper.UpdateUserAsync(userEntity);
+            if (!respose.Succeeded)
+            {
+                return BadRequest(respose.Errors.FirstOrDefault().Description);
+            }
+
+            return NoContent();
+        }
+
     }
 }
