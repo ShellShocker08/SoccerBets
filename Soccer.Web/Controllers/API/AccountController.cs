@@ -148,7 +148,7 @@ namespace Soccer.Web.Controllers.API
             });
         }
 
-
+        // Modificar Usuario (Put)
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut]
         public async Task<IActionResult> PutUser([FromBody] UserRequest request)
